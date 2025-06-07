@@ -1,0 +1,6 @@
+# ECommerceApp
+
+*.xcuserstate
+*.xcuserdata/
+DerivedData/
+.build/
