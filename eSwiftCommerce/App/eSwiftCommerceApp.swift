@@ -9,9 +9,16 @@ import SwiftUI
 
 @main
 struct eSwiftCommerceApp: App {
+    @StateObject private var appState = AppState()
+
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            if appState.isLoggedIn {
+
+            } else {
+                LoginView()
+                    .environmentObject(appState)
+            }
         }
     }
 }
