@@ -12,22 +12,19 @@ struct ProductListView: View {
 
     var body: some View {
         NavigationView {
-            List(viewModel.products) { product in
-                Text(product.title)
+            ScrollView {
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 150))], spacing: 20) {
+                    ForEach(viewModel.products) { product in
+                        NavigationLink(destination: ProductDetailView(product: product)) {
+                            ProductCard(product: product)
+                        }
+                    }
+                }
+                .padding()
             }
             .navigationTitle("Products")
             .task {
                 await viewModel.loadProducts()
-            }
-            .overlay {
-                if viewModel.isLoading {
-                    ProgressView()
-                }
-            }
-            .alert("Error", isPresented: .constant(viewModel.error != nil)) {
-                Button("OK") { viewModel.error = nil }
-            } message: {
-                Text(viewModel.error?.localizedDescription ?? "Unknown error")
             }
         }
     }
