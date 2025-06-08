@@ -38,3 +38,18 @@ final class ProuctListViewModelTests: XCTestCase {
         XCTAssertEqual(viewModel.error as? NSError, error)
     }
 }
+
+class MockProductService: ProductServiceProtocol {
+    var fetchProductsResult: Result<[Product], Error>?
+
+    func fetchProducts() async throws -> [Product] {
+        switch fetchProductsResult {
+        case .success(let products):
+            return products
+        case .failure(let error):
+            throw error
+        case nil:
+            fatalError("fetchProductsResult not set")
+        }
+    }
+}
