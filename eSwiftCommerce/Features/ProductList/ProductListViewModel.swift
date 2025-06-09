@@ -13,16 +13,16 @@ class ProductListViewModel: ObservableObject {
     @Published var isLoading: Bool = false
     @Published var error: Error?
 
-    private let productService: ProductServiceProtocol
+    private let productService: ProductService
 
-    init(productService: ProductServiceProtocol = ProductService.shared) {
+    init(productService: ProductService = .shared) {
         self.productService = productService
     }
 
     func loadProducts() async {
         isLoading = true
         do {
-            products = try await productService.fetchProducts()
+            products = try await productService.fetchAllProducts()
         } catch {
             self.error = error
         }
